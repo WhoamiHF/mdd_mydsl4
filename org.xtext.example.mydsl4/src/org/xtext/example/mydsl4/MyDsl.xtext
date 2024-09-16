@@ -1,0 +1,50 @@
+grammar org.xtext.example.mydsl4.MyDsl with org.eclipse.xtext.common.Terminals
+
+generate myDsl "http://www.xtext.org/example/mydsl4/MyDsl"
+
+Model:
+	statements+=Team_goal_or_task* simulate=SimulateStatement;
+
+Team_goal_or_task:
+	TeamDefinition | GoalDefinition | TaskDefinition
+;
+	
+TeamDefinition:
+	'Team' name=ID '{' robots+=RobotDefinition* '}'
+;
+
+RobotDefinition:
+	'Robot' name=ID 'at' '(' x=INT ',' y=INT ')'
+;
+
+GoalDefinition:
+	'Goal' name=ID 'at' '(' x=INT ',' y=INT ')'
+;
+
+TaskDefinition:
+	'Task' name=ID ('if' condition=Condition)? '{' statements+=TaskStatement* '}'
+;
+
+Condition:
+	team=[TeamDefinition] ':' robot=[RobotDefinition] 'distanceTo' goal=[GoalDefinition] comparator=Comparator distance=INT
+;
+
+Comparator:
+	'isLessThan' | 'isGreaterThan' | 'isEqual'
+;
+
+TaskStatement:
+	team=[TeamDefinition] (':' robot=[RobotDefinition|ID])? (statement=MoveToStatement | 'turnOff')
+;
+
+MoveToStatement:
+	 'moveTo' goal=[GoalDefinition]
+;
+
+SimulateStatement:
+	'Simulate' 'until' condition=Condition '{' runs+=RunStatement+ '}'
+;
+
+RunStatement:
+	'Run' function=[TaskDefinition]
+;

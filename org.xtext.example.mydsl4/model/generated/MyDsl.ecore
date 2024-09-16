@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="myDsl" nsURI="http://www.xtext.org/example/mydsl4/MyDsl" nsPrefix="myDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="Model">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
+        eType="#//Team_goal_or_task" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simulate" eType="#//SimulateStatement"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Team_goal_or_task">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TeamDefinition" eSuperTypes="#//Team_goal_or_task">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="robots" upperBound="-1"
+        eType="#//RobotDefinition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RobotDefinition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalDefinition" eSuperTypes="#//Team_goal_or_task">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TaskDefinition" eSuperTypes="#//Team_goal_or_task">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Condition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
+        eType="#//TaskStatement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Condition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="team" eType="#//TeamDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="robot" eType="#//RobotDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="goal" eType="#//GoalDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comparator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="distance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TaskStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="team" eType="#//TeamDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="robot" eType="#//RobotDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statement" eType="#//MoveToStatement"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MoveToStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="goal" eType="#//GoalDefinition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimulateStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Condition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="runs" upperBound="-1" eType="#//RunStatement"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RunStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//TaskDefinition"/>
+  </eClassifiers>
+</ecore:EPackage>
